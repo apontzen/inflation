@@ -1,0 +1,69 @@
+#warning-eternal {
+  color:#600;
+  display:none;
+}
+#warning-dark-energy {
+  color:#600;
+  display:none;
+}
+#warning-desitter {
+  color:#600;
+  display:none;
+}
+
+.plot {
+ padding-left: 20px;
+ padding-bottom: 30px;
+ width: 600px;
+ height: 300px;
+}
+
+#controls {
+  width: 300px;
+  position: relative;
+  float: left;
+  left: 40px;
+}
+
+#tabs {
+  float: left;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 680px;
+  position: relative;
+  left: 0px;
+}
+
+.label_y {
+  float: left;
+  position: relative;
+  top: 0px;
+  left: -20px;
+}
+
+.label_x {
+  float: left;
+  position: absolute;
+  top: 320px;
+  left: 610px;
+}
+
+#javascript_warning {
+  color: red;
+}
+
+#javascript_ok {
+  display: none;
+}
+
+.explain_good {
+   display: inline;
+}
+
+.explain_intermediate {
+   display: inline;
+}
+
+.explain_bad {
+   display: inline;
+}

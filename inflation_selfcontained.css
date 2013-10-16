@@ -1,0 +1,19 @@
+
+p {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  margin:0;
+  max-width: 1000px;
+}
+
+body {
+  font-family: Trebuchet MS, Verdana;
+}
+
+
+h3 {
+  padding-top: 10px;
+  padding-bottom: 0px;
+  margin: 0;
+  clear: both;
+}

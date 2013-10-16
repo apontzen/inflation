@@ -1,0 +1,382 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+
+<!-- Nathan: these 3 stylesheets are required -->
+<link type="text/css" rel="stylesheet" href="vendor/rickshaw.min.css">
+<link rel="stylesheet" href="vendor/jquery-ui.css" />
+<link rel="stylesheet" href="inflation.css" />
+
+<!-- you'll want to remove the stylesheet below for embedding on astrobites -->
+<link rel="stylesheet" href="inflation_selfcontained.css" /> 
+
+<!-- all these scripts are required -->
+<script src="vendor/d3.v2.js"></script> 
+<script src="vendor/d3.layout.min.js"></script> 
+<script src="vendor/rickshaw.min.js"></script> 
+<script src="vendor/numeric-1.2.6.min.js"></script>
+<script src="vendor/jquery-1.9.1.min.js"></script>
+<script src="vendor/jquery-ui.js"></script>
+<script src="inflation.js"></script>
+
+
+<html> 
+<head>
+  <title>Inflation: it does the opposite of what it says on the tin</title>
+</head>
+<body lang="EN-GB">
+  
+    <h2>Inflation: it does the opposite of what it says on the tin</h2>
+
+<!-- the content for wordpress starts here -->
+    <div >
+    <p id="javascript_warning">Sorry, you'll need javascript running
+    to read this post.</p>
+    
+    <div id="javascript_ok">
+
+      <p>Cosmic inflation is a hypothetical period in the very early
+      universe designed to solve <a
+      href="http://en.wikipedia.org/wiki/Inflation_(cosmology)#Motivations" target="_blank">some
+      weaknesses in the big bang theory</a>. But what actually happens
+      during inflation? According to <a
+      href="http://en.wikipedia.org/w/index.php?title=Inflation_(cosmology)&amp;oldid=574678934" target="_blank">wikipedia</a>
+      and other respectable sources, the main effect is an
+      &lsquo;extremely rapid&rsquo; expansion. That stock description
+      is a bit puzzling; in fact, the more I&rsquo;ve tried to
+      understand it, the more it seems like inflation is secretly all
+      about <i>slow</i> expansion, not rapid expansion.</p>
+
+      <p>The secret&rsquo;s not well-kept: once you know where to look, you
+	can find <a href="http://www.roe.ac.uk/~jap/book/infmatch.pdf"
+	target="_blank">a note by John Peacock</a> that supports the
+	slow-expansion view, for example. But with the rapid-expansion
+	picture so widely accepted and repeated, it&rsquo;s fun to
+	explore why slow-expansion seems a better description. Before
+	the end of this post, I&rsquo;ll try to recruit you to the
+	cause by means of some crafty interactive javascript
+	plots.</p>
+
+      <h3>A tale of two universes</h3>
+
+      <p id="hubble_explanation">There are many measurements which
+      constrain the history of the universe. If, for example, we
+      combine information about how fast the universe is expanding
+      today (<a
+      href="http://www.teachastronomy.com/astropedia/article/The-Hubble-Constant"
+      target="_blank">from supernovae, for example</a>) with the known
+      density of radiation and matter (largely from the <a
+      href="http://cosmology.berkeley.edu/Education/CosmologyEssays/The_Cosmic_Microwave_Background.html"
+      target="_blank">cosmic microwave background</a>), we pretty much
+      pin down how the universe has expanded. An excellent cross-check
+      comes from the abundance of light elements, which were
+      manufactured in the first few minutes of the universe's
+      existence. All-in-all, it's safe to say that we know how fast
+      the universe was expanding all the way back to when it was a few
+      seconds old.  What happened before that?
+      </p>
+      
+      <p>If we assume the early universe contained particles moving
+      near the speed of light (because it was so hot), we can
+      extrapolate backwards. As we go back further in time, the
+      extrapolation must eventually break down when energies reach the <a
+      href="http://en.wikipedia.org/wiki/Planck_scale" target="_blank">Planck
+      scale</a>. But there&rsquo;s a
+      huge gap between the highest energies at which physics has been
+      tested in the laboratory and the Planck energy (a factor of a
+      million billion or so higher). Something interesting could
+      happen in between. </p>
+
+      <p>Inflation is the idea that, because of that gap, there may
+      have been a period during which the universe didn't contain
+      particles. Energy would instead be stored in a scalar field (a
+      similar idea to an electric or magnetic field, only without a
+      sense of direction). The scale of the universe increases
+      exponentially with increasing time during such a phase; the
+      expansion rate accelerates. (Resist any temptation to equate
+      &lsquo;exponential&rsquo; or &lsquo;accelerating&rsquo; with
+      &lsquo;fast&rsquo; until you&rsquo;ve seen the graphs.)
+      Ultimately the inflationary field decays back to particles and
+      the classical picture resumes. By definition, all is back to
+      normal long before the universe gets around to mundane things
+      like manufacturing elements. </p>
+
+      <p>For our current purposes, it&rsquo;s not important to see why
+      inflation is a healthy thing for a young universe to do (<a
+      href="http://en.wikipedia.org/wiki/Inflation_(cosmology)#Motivations" target="_blank">wikipedia
+      lists some reasons if you&rsquo;re interested</a>). We just want
+      to compare two hypothetical universes, both as simple as
+      possible: </p>
+      
+      <ol>
+	<li>a universe containing fast-moving particles (like our own once
+	did);</li>
+	<li>as (1), but including a period of inflation.</li>
+      </ol>
+
+
+      <h3>Comparisons are odorous</h3> 
+      <!-- First Dickens, now Shakespeare. What else can you want? -->
+
+      <p> There are a number of variables that might enter the comparison:</p>
+
+      <ul> 
+	<li><i>a</i>: the <i>scalefactor</i>, i.e. the relative size of a
+	given patch of the universe at some specified moment;</li>
+
+	<li><i>t</i>: the time;</li>
+
+	<li>d<i>a</i>/d<i>t</i>: the rate at which the scalefactor
+	changes with time;</li>
+
+	<li>or if you prefer, <i>H</i>: the Hubble rate of expansion,
+      which is defined as d ln <i>a</i> / d<i>t</i>.</li>
+      </ul>
+
+
+    <p> We'll take <i>a=1</i> and <i>t=0</i> as end conditions for the
+    calculation. There's no need to specify units since we're only
+    interested in comparative trends, not particular values.</p>
+
+
+      <p>
+	There are two minor complications. First, just what do we mean
+	by &lsquo;including inflation&rsquo; in universe (2)?  To keep
+	things simple it&rsquo;ll be fine just to assume that the
+	pressure in the universe instantaneously changes.
+	
+	<span id="eos_details_invitation">(<a href="#"
+	id="eos_details_switch">Click</a> for a slightly more specific
+	description.) The change will kick in between two specified
+	values of <i>a</i> &mdash; that is, over some range of
+	&lsquo;sizes&rsquo; of the universe.</span>
+
+	<span id="eos_details"> In particular, taking the equation of
+	state of the universe to be <i>pressure = w &times; density
+	&times; c<sup>2</sup></i>, we will assume <i>w=1/3</i> except
+	during inflation, when <i>w= &#8211;1</i>. The value of <i>w</i>
+	will switch instantaneously at <i>a=a<sub>0</sub></i>, and
+	switch back at <i>a=a<sub>1</sub></i>.  </span>
+
+	<span id="matching_details_invitation">(<a href="#"
+	id="matching_details_switch">Click</a> for details of the
+	transition.)</span><span id="matching_details">The density
+	just carries over from the radiation to the inflationary field
+	and back again (as it must, because of energy-momentum
+	conservation). In reality, these transitions are messy
+	(reheating at the end of inflation is an entire topic in
+	itself) &#8211; but that doesn&rsquo;t change the overall
+	picture.</span>
+      </p>
+
+
+      <h3>Finding the plot</h3>
+      <p>The <a
+      href="http://en.wikipedia.org/wiki/Friedmann_equations">Friedmann
+      equations</a> (or equivalently, the <a
+      href="http://en.wikipedia.org/wiki/Einstein_field_equations">Einstein
+      equations</a>) take our history of the contents of the universe
+      and turn it into a history of the expansion (including the
+      exponential behaviour during inflation). But now a second
+      complication arises: such equations can only tell you how the
+      Hubble expansion rate <i>H</i> (or, equivalently,
+      d<i>a</i>/d<i>t</i>) <i>changes</i> over time, not what its
+      <i>actual value</i> is. So to compare universes (1) and (2), we
+      need one more piece of information &#8211; the expansion rate at
+      some particular moment. </p>
+
+
+      <p>Since we never specified any units, we might as well take
+      <i>H</i>=1 in universe (1) at <i>t</i>=0 (the end of our
+      calculation).  Any other choice is only different by a constant
+      scaling. What about universe (2)? As discussed above, the
+      universe ends up expanding at a known rate, so really universe
+      (2) had better end up expanding at the same rate as universe
+      (1). But, for completeness, you&rsquo;ll be able to change that
+      choice below and have universe (1) and (2) match their expansion
+      rate at any time you choose.</p>
+  
+      <p>All that&rsquo;s left is to choose the variables to
+      plot. I&rsquo;ve provided a few options in the applet below. It
+      seems they all lead to the conclusion that inflation isn&rsquo;t
+      ultra-rapid expansion; it&rsquo;s ultra-slow expansion.</p>
+      
+      <p>By the way, if you're convinced by the plots, you might
+      wonder why anyone ever thought to call inflation rapid. One
+      possible answer is that the expansion back then <i>was</i>
+      faster than at any subsequent time.  But the comparison shows
+      that this is a feature of the early universe, not a defining
+      characteristic of inflation. Have a play with the plots and
+      sliders below and <a href="http://www.twitter.com/apontzen"
+      target="_blank">let me know</a> if there's a better way to look
+      at it.
+      </p>
+ 
+
+      <div id="tabs">
+	<ul>
+	  <li><a href="#H_of_a_tab">H(a)</a></li>
+	  <li><a href="#a_of_t_tab">a(t)</a></li>
+	  <li><a href="#H_of_t_tab">H(t)</a></li>
+	  <li><a href="#da_by_dt_tab">da/dt</a></li>
+	</ul>
+	
+	<div id="H_of_a_tab">
+	  <p>This plot shows the Hubble expansion rate as a function
+	  of the size of the universe.  <span class="explain_good">A
+	  universe with inflation (solid line) has a Hubble expansion
+	  rate that is <i>slower</i> than a universe without (dashed
+	  line). Inflation is a period of <i>slow</i>
+	  expansion!</span> <span class="explain_intermediate">In the
+	  current plot, sometimes the inflationary universe (solid
+	  line) is expanding slower, and sometimes faster than the
+	  universe without inflation (dashed line). But then, you've
+	  chosen to make the Hubble rate exactly match at an arbitrary
+	  point during inflation, so that's not so surprising.</span>
+	  <span class="explain_bad">Currently it looks like the
+	  inflationary universe (solid line) is always expanding
+	  faster than the non-inflationary universe (dashed line).
+	  But the inflationary universe ends up (at <i>a</i>=1)
+	  expanding much faster than H=1, which was our target based
+	  on what we know about the universe today. So there must be
+	  something wrong with this comparison.</span></p>
+	  
+	  <div id="H_of_a" class="plot"><div class="label_y">H</div><div class="label_x">a</div>
+	  </div> 
+
+	</div>
+
+
+	<div id="a_of_t_tab"> 
+	  <p>This plot shows the size of the universe as a function of
+	  time.  <span class="explain_good">Inflationary universes
+	  (solid line) hit <i>a</i>=0 at earlier times. In other
+	  words, a universe with inflation (solid line) is always
+	  older than one without (dashed line) and has therefore
+	  expanded slower on average. Inflation is a period of
+	  <i>slow</i> expansion!</span> <span
+	  class="explain_intermediate explain_bad">With the current
+	  setup you're not matching the late-time expansion history in
+	  the inflationary universe against the known one from our
+	  universe; to make a meaningful comparison, the dotted and
+	  solid lines must match at late times (<i>t</i>=0). So the
+	  plot can't be used to assess the speed of expansion during
+	  inflation.
+	</span>
+	  </p>
+
+	<div id="a_of_t" class="plot"><div class="label_y">a</div><div
+	  class="label_x">t</div></div>
+
+	  </div>
+
+	<div id="H_of_t_tab">
+	  <p>This plot shows the Hubble expansion rate of the
+	  universe. <span class="explain_good">The
+	  universe with an accelerating period (solid line) is always
+	  expanding at the same rate or slower than the one without
+	  (dashed line). Inflation is a period of <i>slow</i>
+	  expansion!</span>
+	  <span class="explain_intermediate explain_bad">
+	  Currently it looks like the inflationary universe (solid
+	  line) may expand faster than the non-inflationary universe
+	  (dashed line).  But the inflationary universe ends up (at <i>t</i>=0)
+	  expanding much faster than H=1, which was our target based
+	  on what we know about the universe today. So there must be
+	  something wrong with this comparison.
+	  </span>
+	  </p>
+
+	  <div id="H_of_t" class="plot"><div class="label_y">H</div><div class="label_x">t</div></div> 
+
+	</div>
+
+
+	<div id="da_by_dt_tab">
+	  <p>This plot shows the rate of change of scalefactor
+	  (d<i>a</i>/d<i>t</i>) as a function of time before the
+	  present day. <span class="explain_good"> The
+	  universe with an accelerating period (solid line) is always
+	  expanding at the same rate or slower than the one without
+	  (dashed line). Inflation is a period of <i>slow</i>
+	  expansion!</span>
+	  <span class="explain_intermediate explain_bad">
+	    With the current setup you're not matching the late-time
+	    expansion history in the inflationary universe (solid
+	    line) against the known one from our universe (d<i>a</i>/d<i>t</i> does not match at <i>t</i>=0,
+	    for instance). So the plot
+	    can't be used to assess the speed of expansion during
+	    inflation.
+	  </span>
+	  </p>
+	  <div id="da_by_dt" class="plot"><div class="label_y">da/dt</div><div class="label_x">t</div></div> 
+	  
+	</div>
+      </div>
+
+    <div id="controls">
+	<p>First <strong>select the <i>range</i> of scalefactors over which
+	inflation occurs</strong> by dragging the two ends of the grey bar. Currently,
+	<i>a<sub>0</sub></i>=<span id="a_start">X</span> and <i>a<sub>1</sub></i>=<span id="a_end">X</span></p>
+	<div id="slider-range"></div>
+	<p> In realistic models of inflation, this range would extend
+	over many orders of magnitude in scale, making the effects
+	bigger than the graphs suggest. </p>
+
+	<div id="warning-eternal">Note: you&rsquo;ve set inflation to
+	start at <i>a=0</i>. That corresponds to <i>eternal</i>
+	inflation in which the big bang is actually pushed back to
+	<i>t=&ndash;&infin;</i>. That&rsquo;s fine but the plots
+	will be truncated at a finite negative <i>t</i>. 
+
+	<span id="timing_details_invitation">
+	(Fancy <a href="#" id="timing_details_switch">one extra thought</a>?)</span>
+
+
+	<span id="timing_details">In the light of this, you might also wonder what it means when people say that inflation
+	happened a tiny fraction of a second after the big bang. Inflation itself changes the timeline &mdash; it could have happened
+	<i>any</i> length of time after the big bang. The normal quoted time is an unphysical lower limit. </span>
+
+	</div>
+
+	<div id="warning-dark-energy">Note: you&rsquo;ve set inflation to end at
+	<i>a=1</i>. That corresponds to a period of exponential expansion at recent
+	times, so it&rsquo;s more like playing with dark energy than with inflation.</div>
+	<div id="warning-desitter">Note: you&rsquo;ve set inflation to occur 
+	over all <i>a</i>. This corresponds to a de Sitter universe. It makes a little hard to
+	make the connection with our own universe clearly.</div>
+
+	<p>Now <strong>select the scalefactor at which the expansion rate is matched between universe (1)
+	and (2)</strong>.</p>
+	<div id="slider-pivot"></div>
+	
+	<p id="sensible-matching">At the moment
+	<i>a<sub>match</sub></i>=<span class="a_match">X</span>:
+	you&rsquo;re matching after inflation is complete. That makes
+	sense because <a href="#hubble_explanation">various observations</a> fix the expansion rate at
+	this time.</p>
+
+	<p id="during-inflation-matching">At the moment
+	<i>a<sub>match</sub></i>=<span class="a_match">X</span>:
+	you&rsquo;re matching before or during inflation. Look at the
+	Hubble rate at the end of inflation and you'll find it
+	disagrees between the two universes.  That means they can't
+	both match what we know about the <a
+	href="#hubble_explanation">universe at late times</a>, so the
+	comparison isn't really going to be fair.</p>
+      </div>
+
+      <h3>Acknowledgements</h3>
+      <p>Pedro Ferreira, Tom Whyntie, Nina Roth, Daniela Saadeh,
+      Steven Gratton, Nathan Sanders, Rob Simpson, and Jo Dunkley made
+      helpful comments on an early version.  Rob Simpson and Brooke
+      Simmons pointed me to the javascript libraries <a
+      href="http://d3js.org/">d3</a>, <a
+      href="http://code.shutterstock.com/rickshaw/">rickshaw</a> and
+      <a href="http://www.numericjs.com/">numeric</a>.</p>
+    </div>
+  </div>
+<!-- the content ends here -->
+
+</body>
+
+
+</html>
