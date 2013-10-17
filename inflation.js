@@ -217,6 +217,8 @@ function update_visibility(a,b,c) {
 	$(".explain_good").hide();
     }
 
+
+    // insert the correct scalefactors into the text
     $("#a_start").html(a.toString());
     $("#a_end").html(b.toString());
     $(".a_match").html(c.toString());
