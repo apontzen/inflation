@@ -16,7 +16,7 @@ var eos_transitions;
 var n_elements = 500;
 
 // these arrays will have the latest plot data in them:
-var a = new Array(n_elements);
+var a_ar = new Array(n_elements);
 var adot = new Array(n_elements);
 var t = new Array(n_elements);
 var adot_reference = new Array(n_elements);
@@ -231,8 +231,8 @@ function setup_a_and_adot(pivot) {
     for(var i=n_elements-1; i>=0; i--) {
 	var a_this = i/n_elements;
 
-	a[i] = a_this;
-	adot[i] = adot_from_a(a[i]);
+	a_ar[i] = a_this;
+	adot[i] = adot_from_a(a_ar[i]);
     }
 
     // now set H=1 at a=pivot
@@ -252,7 +252,7 @@ function make_plots() {
     setup_a_and_adot(1.0);
 
     // calculate Hubble rate (for plotting purposes)
-    var H = numeric.div(adot,a);
+    var H = numeric.div(adot,a_ar);
     
 
     // calculate time array
@@ -262,12 +262,12 @@ function make_plots() {
 	// store current adot for future reference
 	adot_reference[i] = adot[i];
 	// interpolate and store t
-	t[i] = t_sol.at(a[i]) - t_max;
+	t[i] = t_sol.at(a_ar[i]) - t_max;
     }
 
     // make the plots
-    H_of_a = make_plot("H_of_a",a,H,true,0.9,1e3);
-    a_of_t = make_plot("a_of_t",t,a,false,-0.05,1.05);
+    H_of_a = make_plot("H_of_a",a_ar,H,true,0.9,1e3);
+    a_of_t = make_plot("a_of_t",t,a_ar,false,-0.05,1.05);
     H_of_t = make_plot("H_of_t",t,H,true,0.9,1e3);
     da_by_dt = make_plot("da_by_dt",t,adot,false,-1,11);
 }
@@ -290,15 +290,15 @@ function update_plots(event,ui) {
     var t_sol = numeric.dopri(1.e-4,1,1.e-4,one_over_adot);
     var t_max = t_sol.at(1);
     for(var i = 0; i<n_elements; i++) {
-	t[i] = t_sol.at(a[i]) - t_max;
+	t[i] = t_sol.at(a_ar[i]) - t_max;
     }
 
-    var H = numeric.div(adot,a)
+    var H = numeric.div(adot,a_ar)
 
     // update plots
 
-    update_plot(H_of_a,a,H,true);
-    update_plot(a_of_t,t,a);
+    update_plot(H_of_a,a_ar,H,true);
+    update_plot(a_of_t,t,a_ar);
     update_plot(H_of_t,t,H);
     update_plot(da_by_dt,t,adot);
     update_visibility(inflation_start,inflation_end,matching);
