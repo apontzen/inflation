@@ -19,10 +19,10 @@
 }
 
 #controls {
-  width: 300px;
+  width: 250px;
   position: relative;
   float: left;
-  left: 40px;
+  left: 20px;
 }
 
 #tabs {
