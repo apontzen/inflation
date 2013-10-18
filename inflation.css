@@ -14,7 +14,7 @@
 .plot {
  padding-left: 20px;
  padding-bottom: 30px;
- width: 600px;
+ width: 400px;
  height: 300px;
 }
 
@@ -29,7 +29,7 @@
   float: left;
   margin-top: 10px;
   margin-bottom: 10px;
-  width: 680px;
+  width: 480px;
   position: relative;
   left: 0px;
 }
@@ -45,7 +45,7 @@
   float: left;
   position: absolute;
   top: 320px;
-  left: 610px;
+  left: 410px;
 }
 
 #javascript_warning {
