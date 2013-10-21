@@ -265,6 +265,7 @@ function make_plots() {
 	t[i] = t_sol.at(a_ar[i]) - t_max;
     }
 
+
     // make the plots
     H_of_a = make_plot("H_of_a",a_ar,H,true,0.9,1e3);
     a_of_t = make_plot("a_of_t",t,a_ar,false,-0.05,1.05);
@@ -292,6 +293,17 @@ function update_plots(event,ui) {
     for(var i = 0; i<n_elements; i++) {
 	t[i] = t_sol.at(a_ar[i]) - t_max;
     }
+
+    // kludge: if a_0=0, the numerics dictate what the range of the
+    // graph is (since actually t(0)=-infinity). This can give
+    // misleading effects when adjusting a_1 or a_match. So, make an
+    // arbitrary t[1] choice here and fix it.
+    
+    if (inflation_start==0.0) {
+	t[1]=-3.5;
+    }
+
+    // calculate H
 
     var H = numeric.div(adot,a_ar)
 
